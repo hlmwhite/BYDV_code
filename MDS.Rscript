@@ -1,0 +1,20 @@
+#!/usr/bin/env Rscript
+
+args = commandArgs(trailingOnly=TRUE)
+
+library(ggplot2)
+library(ggrepel)
+
+table_name<-paste(args[1],"/mod.plink.mds", sep = "")
+
+mds_results <- read.table(table_name, header=TRUE)
+
+pdf_name_bar<-paste(args[1],"/MDS_12.pdf", sep = "")
+pdf(pdf_name_bar, width=20, height=20)
+
+#ggplot(mds_results, aes(x = C1, y = C2, colour = FID, label= sample_label)) +
+#geom_point() + theme_classic() + labs(x = "Component 1", y = "Component 2", title = "MDS Plot of Components 1 and 2") + geom_label_repel(fill = "white", xlim = c(-Inf, Inf), ylim = c(-Inf, Inf), max.overlaps = 1) + theme(legend.position = "none") + coord_cartesian(clip = "off")
+
+ggplot(mds_results, aes(x = C1, y = C2, colour = FID, label= sample_label)) + geom_point() + theme_classic() + labs(x = "Component 1", y = "Component 2", title = "MDS Plot of Components 1 and 2") + geom_label_repel(fill = "white", max.overlaps = 100) + theme(legend.position = "none") + coord_cartesian(clip = "off")
+
+dev.off()
