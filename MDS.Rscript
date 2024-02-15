@@ -1,5 +1,10 @@
 #!/usr/bin/env Rscript
 
+#####
+# Author: Mark Whitehead, hlmwhite@liverpool.ac.uk
+#####
+
+
 args = commandArgs(trailingOnly=TRUE)
 
 library(ggplot2)
