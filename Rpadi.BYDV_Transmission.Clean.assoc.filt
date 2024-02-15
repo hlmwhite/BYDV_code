@@ -1,3 +1,7 @@
+######
+#  Plink linear association test output for BYDV transmission. 
+#####
+
 CHR                                                             SNP         BP   A1       TEST    NMISS       BETA       SE      L95      U95         STAT            P
 scf7180000007787.4088110                                  scf7180000007787.4088110:50848      50848    C        ADD        7      25.03    9.575    6.268     43.8        2.615      0.04741
 scf7180000007787.4088110                                scf7180000007787.4088110:1686813    1686813    T        ADD        7     -26.92    5.994   -38.67   -15.17       -4.491     0.006453
