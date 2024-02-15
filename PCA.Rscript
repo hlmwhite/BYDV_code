@@ -1,0 +1,37 @@
+#!/usr/bin/env Rscript
+
+args = commandArgs(trailingOnly=TRUE)
+
+library(tidyverse)
+
+table_name<-paste(args[1],"/plink.eigenvec", sep = "")
+pca <- read_table(table_name, col_names=FALSE)
+
+eigenval_name<-paste(args[1],"/plink.eigenval", sep = "")
+eigenval <- scan(eigenval_name)
+
+pca <- pca[,-1]
+names(pca)[1] <- "ind"
+names(pca)[2:ncol(pca)] <- paste0("PC", 1:(ncol(pca)-1))
+
+# dont forget, num pc's is N data - 1, https://stats.stackexchange.com/questions/123318/why-are-there-only-n-1-principal-components-for-n-data-if-the-number-of-dime
+
+pve <- data.frame(PC = 1:nrow(pca), pve = eigenval/sum(eigenval)*100)
+a <- ggplot(pve, aes(PC, pve)) + geom_bar(stat = "identity")
+
+PCs_bar <- a + ylab("Percentage variance explained") + theme_light()
+
+pdf_name_bar<-paste(args[1],"/PCs_bar.pdf", sep = "")
+pdf(pdf_name_bar)
+print(PCs_bar)
+dev.off()
+
+#cumsum(pve$pve)
+
+b <- ggplot(pca, aes(PC1, PC2, col = ind)) + geom_point(size = 3)
+b <- b + coord_equal() + theme_light()
+
+pdf_name_bar<-paste(args[1],"/PCA_12.pdf", sep = "")
+pdf(pdf_name_bar, width=20, height=20)
+b + xlab(paste0("PC1 (", signif(pve$pve[1], 3), "%)")) + ylab(paste0("PC2 (", signif(pve$pve[2], 3), "%)"))
+dev.off()
